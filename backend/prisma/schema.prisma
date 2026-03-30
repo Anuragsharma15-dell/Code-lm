@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  projects  Project[]
+  sessions  Session[]
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  chats     AIChat[]
+  files     File[]
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model File {
+  id        String   @id @default(cuid())
+  name      String
+  content   String   @default("")
+  projectId String
+  parentId  String?
+  isFolder  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  parent    File?    @relation("FolderStructure", fields: [parentId], references: [id])
+  children  File[]   @relation("FolderStructure")
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([parentId])
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model AIChat {
+  id        String      @id @default(cuid())
+  projectId String
+  createdAt DateTime    @default(now())
+  project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  messages  AIMessage[]
+}
+
+model AIMessage {
+  id        String   @id @default(cuid())
+  chatId    String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+  chat      AIChat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@index([chatId])
+}

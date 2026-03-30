@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stitch Code Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed": "#001a41",
+                        "surface-bright": "#393939",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-secondary-container": "#d6a9ff",
+                        "secondary": "#ddb7ff",
+                        "surface-tint": "#adc6ff",
+                        "on-primary-container": "#00285c",
+                        "primary-container": "#4b8eff",
+                        "on-tertiary-fixed": "#351000",
+                        "outline-variant": "#414755",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#4c1a00",
+                        "tertiary": "#ffb595",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1c1b1b",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed": "#f0dbff",
+                        "surface-variant": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "on-primary": "#002e69",
+                        "surface-container-highest": "#353534",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface": "#131313",
+                        "on-surface-variant": "#c1c6d7",
+                        "on-primary-fixed-variant": "#004493",
+                        "surface-container": "#201f1f",
+                        "inverse-surface": "#e5e2e1",
+                        "on-error": "#690005",
+                        "on-secondary": "#490080",
+                        "inverse-primary": "#005bc1",
+                        "tertiary-container": "#ef6719",
+                        "primary": "#adc6ff",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "primary-fixed": "#d8e2ff",
+                        "inverse-on-surface": "#313030",
+                        "surface-dim": "#131313",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "outline": "#8b90a0",
+                        "on-tertiary": "#571e00",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "background": "#131313",
+                        "on-secondary-fixed": "#2c0051",
+                        "secondary-container": "#6f00be",
+                        "primary-fixed-dim": "#adc6ff"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 18px;
+        }
+        body {
+            background-color: #0e0e0e;
+            color: #e5e2e1;
+            overflow: hidden;
+        }
+        .code-syntax-keyword { color: #adc6ff; }
+        .code-syntax-function { color: #ddb7ff; }
+        .code-syntax-string { color: #ffb595; }
+        .code-syntax-comment { color: #606060; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #414755; border-radius: 10px; }
+    </style>
+</head>
+<body class="font-body selection:bg-primary-container/30">
+<!-- TopNavBar (JSON Anchor) -->
+<header class="fixed top-0 w-full z-50 bg-[#131313]/80 backdrop-blur-xl border-b border-[#414755]/15 shadow-2xl shadow-black/40 flex items-center justify-between px-4 h-12 w-full font-['Inter'] tracking-tight antialiased">
+<div class="flex items-center gap-4">
+<span class="text-lg font-bold tracking-tighter text-[#ADC6FF]">Stitch Code</span>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<div class="flex items-center gap-2 group cursor-pointer">
+<span class="text-xs font-semibold text-on-surface">quantum-react-app</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant group-hover:text-primary transition-colors">edit</span>
+</div>
+<div class="flex items-center gap-2 ml-4">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500/80"></div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Saved</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1 bg-surface-container-high/50 rounded-lg p-0.5">
+<button class="px-3 py-1 text-[11px] font-medium text-white bg-primary-container rounded-md flex items-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined !text-[14px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                    Run
+                </button>
+<button class="px-3 py-1 text-[11px] font-medium text-on-surface-variant hover:text-white transition-colors duration-200">Share</button>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-white transition-colors">settings</button>
+<img alt="User Profile" class="w-7 h-7 rounded-full border border-outline-variant/20" data-alt="professional portrait of a creative developer in high contrast black and white with subtle blue rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlcB__cEb-wHBMVetCa2cAlQwZWtaoWC0hQO2ngNknqjW-IdCj5cJCoAM5OPcKsELftoHNiEq0SHpu2U-shQsi4w1IciM8toQvcpkf1ZzZkohAXHwmpYFRr7mOWHYPP8Av8Tf4HfAJt6u-nF04hIuk4aTP1l_WZV_a8ttoQt74YvvLtPms_wUd7BlCJX3iSgeviLvxFiaTSYowfwfpjvEvwr4hSpCV8uNLyKDsQa1JuCFsqu_zlqsAT0lG7CZK4ZcwHsg_C0-Avtc"/>
+</div>
+</div>
+</header>
+<main class="flex h-screen pt-12">
+<!-- SideNavBar (JSON Anchor) - Integrated with File Explorer -->
+<nav class="fixed left-0 top-0 h-full flex flex-col justify-between bg-[#1C1B1B] w-14 py-4 z-40 border-r border-[#414755]/10">
+<div class="flex flex-col items-center gap-4 mt-12">
+<div class="group relative flex items-center justify-center w-full py-3 border-l-2 border-[#ADC6FF] bg-[#201F1F] text-[#ADC6FF]">
+<span class="material-symbols-outlined">description</span>
+<div class="absolute left-16 bg-surface-container-high text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">Explorer</div>
+</div>
+<div class="group relative flex items-center justify-center w-full py-3 text-[#A0A0A0] hover:bg-[#2A2A2A] hover:text-white transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined">search</span>
+</div>
+<div class="group relative flex items-center justify-center w-full py-3 text-[#A0A0A0] hover:bg-[#2A2A2A] hover:text-white transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<div class="group relative flex items-center justify-center w-full py-3 text-[#A0A0A0] hover:bg-[#2A2A2A] hover:text-white transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined">extension</span>
+</div>
+<div class="group relative flex items-center justify-center w-full py-3 text-[#A0A0A0] hover:bg-[#2A2A2A] hover:text-white transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-4 mb-4">
+<div class="group relative flex items-center justify-center w-full py-3 text-[#A0A0A0] hover:bg-[#2A2A2A] hover:text-white transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+<div class="group relative flex items-center justify-center w-full py-3 text-[#A0A0A0] hover:bg-[#2A2A2A] hover:text-white transition-colors duration-150 ease-in-out">
+<span class="material-symbols-outlined">settings</span>
+</div>
+</div>
+</nav>
+<!-- Main Workspace Grid -->
+<div class="flex-1 ml-14 flex overflow-hidden">
+<!-- Left Sidebar: File Explorer -->
+<aside class="w-64 bg-surface-container-low flex flex-col border-r border-outline-variant/10">
+<div class="px-4 py-3 flex items-center justify-between border-b border-outline-variant/10">
+<span class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Explorer</span>
+<div class="flex gap-2">
+<button class="material-symbols-outlined !text-[16px] text-on-surface-variant hover:text-primary">note_add</button>
+<button class="material-symbols-outlined !text-[16px] text-on-surface-variant hover:text-primary">create_new_folder</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-2 custom-scrollbar">
+<!-- Folder: src -->
+<div class="group cursor-pointer">
+<div class="flex items-center gap-2 px-4 py-1.5 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined !text-[16px] text-primary">expand_more</span>
+<span class="material-symbols-outlined !text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">folder</span>
+<span class="text-[12px] text-on-surface">src</span>
+</div>
+<div class="ml-6 space-y-0.5 border-l border-outline-variant/20">
+<div class="flex items-center gap-2 px-4 py-1.5 bg-surface-container/60 border-l-2 border-primary ml-[-1px]">
+<span class="material-symbols-outlined !text-[16px] text-primary-container">description</span>
+<span class="text-[12px] text-on-surface">App.tsx</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-1.5 hover:bg-surface-container/50 transition-colors">
+<span class="material-symbols-outlined !text-[16px] text-secondary">description</span>
+<span class="text-[12px] text-on-surface-variant">index.css</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-1.5 hover:bg-surface-container/50 transition-colors">
+<span class="material-symbols-outlined !text-[16px] text-on-surface-variant">description</span>
+<span class="text-[12px] text-on-surface-variant">utils.ts</span>
+</div>
+</div>
+</div>
+<!-- Folder: public -->
+<div class="mt-2 group cursor-pointer">
+<div class="flex items-center gap-2 px-4 py-1.5 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined !text-[16px] text-on-surface-variant">chevron_right</span>
+<span class="material-symbols-outlined !text-[16px] text-on-surface-variant">folder</span>
+<span class="text-[12px] text-on-surface">public</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-4 py-1.5 hover:bg-surface-container/50 transition-colors cursor-pointer mt-1">
+<span class="material-symbols-outlined !text-[16px] text-on-tertiary-container">settings</span>
+<span class="text-[12px] text-on-surface-variant">package.json</span>
+</div>
+</div>
+</aside>
+<!-- Center Content: Editor & Terminal -->
+<div class="flex-1 flex flex-col min-w-0 bg-surface">
+<!-- Editor Tabs -->
+<div class="flex bg-surface-container-low border-b border-outline-variant/10 overflow-x-auto custom-scrollbar">
+<div class="flex items-center gap-2 px-4 py-2.5 bg-surface border-t-2 border-primary min-w-[120px]">
+<span class="material-symbols-outlined !text-[14px] text-primary-container">description</span>
+<span class="text-[11px] font-medium">App.tsx</span>
+<span class="material-symbols-outlined !text-[14px] ml-auto hover:bg-surface-container-high rounded cursor-pointer transition-colors">close</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2.5 hover:bg-surface-container transition-colors min-w-[120px] text-on-surface-variant">
+<span class="material-symbols-outlined !text-[14px] text-secondary">description</span>
+<span class="text-[11px] font-medium">index.css</span>
+<span class="material-symbols-outlined !text-[14px] ml-auto hover:bg-surface-container-high rounded cursor-pointer opacity-0 hover:opacity-100 transition-opacity">close</span>
+</div>
+</div>
+<!-- Code Editor Area -->
+<div class="flex-1 overflow-auto font-mono text-[13px] leading-relaxed custom-scrollbar p-6 bg-surface">
+<div class="flex">
+<div class="w-10 pr-4 text-right text-on-surface-variant/40 select-none">
+                            1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14
+                        </div>
+<div class="flex-1">
+<span class="code-syntax-keyword">import</span> React, { useState } <span class="code-syntax-keyword">from</span> <span class="code-syntax-string">'react'</span>;<br/>
+<span class="code-syntax-keyword">import</span> <span class="code-syntax-string">'./App.css'</span>;<br/><br/>
+<span class="code-syntax-keyword">function</span> <span class="code-syntax-function">App</span>() {<br/>
+                              <span class="code-syntax-keyword">const</span> [count, setCount] = <span class="code-syntax-function">useState</span>(<span class="code-syntax-string">0</span>);<br/><br/>
+                              <span class="code-syntax-keyword">return</span> (<br/>
+                                &lt;div <span class="code-syntax-function">className</span>=<span class="code-syntax-string">"app-container"</span>&gt;<br/>
+                                  &lt;header&gt;<br/>
+                                    &lt;h1&gt;Stitch Code React&lt;/h1&gt;<br/>
+                                    &lt;button <span class="code-syntax-function">onClick</span>={<span class="code-syntax-function">() =&gt; setCount(count + 1)</span>}&gt;<br/>
+                                      Count is: {count}<br/>
+                                    &lt;/button&gt;<br/>
+                                  &lt;/header&gt;<br/>
+                                &lt;/div&gt;<br/>
+                              );<br/>
+                            }
+                        </div>
+</div>
+</div>
+<!-- Bottom Terminal -->
+<div class="h-48 border-t border-outline-variant/15 bg-surface-container-lowest flex flex-col">
+<div class="flex items-center px-4 h-8 gap-4 border-b border-outline-variant/5 bg-surface-container-low/40">
+<div class="text-[10px] font-bold text-primary uppercase tracking-widest border-b border-primary h-full flex items-center px-1">Terminal</div>
+<div class="text-[10px] font-medium text-on-surface-variant uppercase tracking-widest hover:text-on-surface cursor-pointer">Debug Console</div>
+<div class="text-[10px] font-medium text-on-surface-variant uppercase tracking-widest hover:text-on-surface cursor-pointer">Output</div>
+<div class="ml-auto flex gap-2">
+<span class="material-symbols-outlined !text-[14px] text-on-surface-variant hover:text-white cursor-pointer">add</span>
+<span class="material-symbols-outlined !text-[14px] text-on-surface-variant hover:text-white cursor-pointer">close</span>
+</div>
+</div>
+<div class="flex-1 p-3 font-mono text-[12px] text-on-surface-variant overflow-y-auto custom-scrollbar">
+<div class="flex gap-2">
+<span class="text-primary-container">➜</span>
+<span class="text-tertiary">quantum-react-app</span>
+<span class="text-secondary">git:(main)</span>
+<span>$ npm start</span>
+</div>
+<div class="mt-1 text-on-surface-variant/70">
+                            Compiled successfully!<br/>
+                            You can now view <span class="text-on-surface">quantum-react-app</span> in the browser.<br/><br/>
+                            Local:           http://localhost:3000<br/>
+                            On Your Network:  http://192.168.1.5:3000<br/><br/>
+                            Note that the development build is not optimized.<br/>
+                            To create a production build, use npm run build.
+                        </div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: AI Chat Panel (The Signature Component) -->
+<aside class="w-80 bg-surface-container-low/40 border-l border-outline-variant/10 flex flex-col backdrop-blur-sm">
+<div class="px-4 py-3 flex items-center justify-between border-b border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">smart_toy</span>
+<span class="text-[11px] font-bold uppercase tracking-wider text-on-surface">AI Assistant</span>
+</div>
+<span class="text-[9px] px-1.5 py-0.5 rounded bg-primary-container/20 text-primary border border-primary/20">v1.2-beta</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+<!-- User Message -->
+<div class="flex flex-col items-end gap-1.5">
+<div class="bg-surface-container-high px-3 py-2 rounded-xl rounded-tr-none text-[12px] text-on-surface max-w-[90%]">
+                            How do I add a cleanup function to this useState hook?
+                        </div>
+<span class="text-[9px] text-on-surface-variant">10:42 AM</span>
+</div>
+<!-- AI Message -->
+<div class="flex flex-col items-start gap-1.5">
+<div class="bg-secondary-container/20 border border-secondary/10 px-3 py-3 rounded-xl rounded-tl-none text-[12px] text-on-surface max-w-[100%]">
+<p class="mb-3">Actually, cleanup functions are used with <code class="bg-surface-container-highest px-1 rounded">useEffect</code>, not <code class="bg-surface-container-highest px-1 rounded">useState</code>. Here is how you would implement it:</p>
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-outline-variant/20 font-mono text-[11px] mb-3">
+<span class="code-syntax-function">useEffect</span>(() =&gt; {<br/>
+                                  <span class="code-syntax-keyword">const</span> timer = <span class="code-syntax-function">setInterval</span>(() =&gt; {}, <span class="code-syntax-string">1000</span>);<br/>
+                                  <span class="code-syntax-keyword">return</span> () =&gt; <span class="code-syntax-function">clearInterval</span>(timer);<br/>
+                                }, []);
+                            </div>
+<button class="w-full py-1.5 bg-primary-container text-on-primary-container font-semibold rounded-lg text-[11px] hover:bg-primary-container/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined !text-[14px]">auto_fix_high</span>
+                                Apply Change
+                            </button>
+</div>
+<span class="text-[9px] text-on-surface-variant">Stitch AI</span>
+</div>
+</div>
+<!-- AI Input -->
+<div class="p-4 bg-surface-container-low border-t border-outline-variant/10">
+<div class="relative">
+<textarea class="w-full bg-surface-container-highest/60 border-none rounded-xl text-[12px] text-on-surface placeholder:text-on-surface-variant/50 focus:ring-1 focus:ring-primary/30 p-3 resize-none custom-scrollbar" placeholder="Ask AI to write code or debug..." rows="3"></textarea>
+<div class="absolute bottom-3 right-3 flex items-center gap-2">
+<span class="text-[9px] text-on-surface-variant font-mono">⌘ + L</span>
+<button class="p-1.5 bg-primary rounded-lg text-on-primary shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined !text-[18px]">arrow_upward</span>
+</button>
+</div>
+</div>
+<div class="flex justify-between items-center mt-3 px-1">
+<div class="flex gap-2">
+<button class="material-symbols-outlined !text-[16px] text-on-surface-variant hover:text-white">attach_file</button>
+<button class="material-symbols-outlined !text-[16px] text-on-surface-variant hover:text-white">image</button>
+</div>
+<span class="text-[10px] text-on-surface-variant/50">Intercom Active</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer (JSON Anchor) -->
+<footer class="fixed bottom-0 w-full bg-[#0E0E0E] border-t border-[#414755]/10 z-50">
+<div class="flex flex-row justify-between items-center max-w-full px-4 h-6 text-[10px] font-['Inter'] text-[#A0A0A0]">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined !text-[12px] text-secondary">account_tree</span>
+<span>main*</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined !text-[12px] text-error">error</span>
+<span>0</span>
+<span class="material-symbols-outlined !text-[12px] text-tertiary">warning</span>
+<span>2</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span>Spaces: 2</span>
+<span>UTF-8</span>
+<span>TypeScript JSX</span>
+<span class="material-symbols-outlined !text-[12px] text-primary">notifications</span>
+</div>
+</div>
+</footer>
+</body></html>

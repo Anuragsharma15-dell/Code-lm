@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-background": "#e5e2e1",
+              "on-primary-fixed": "#001a41",
+              "surface-bright": "#393939",
+              "tertiary-fixed": "#ffdbcc",
+              "on-secondary-container": "#d6a9ff",
+              "secondary": "#ddb7ff",
+              "surface-tint": "#adc6ff",
+              "on-primary-container": "#00285c",
+              "primary-container": "#4b8eff",
+              "on-tertiary-fixed": "#351000",
+              "outline-variant": "#414755",
+              "error": "#ffb4ab",
+              "on-tertiary-container": "#4c1a00",
+              "tertiary": "#ffb595",
+              "error-container": "#93000a",
+              "surface-container-low": "#1c1b1b",
+              "on-surface": "#e5e2e1",
+              "surface-container-high": "#2a2a2a",
+              "secondary-fixed": "#f0dbff",
+              "surface-variant": "#353534",
+              "on-error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#7c2e00",
+              "on-primary": "#002e69",
+              "surface-container-highest": "#353534",
+              "surface-container-lowest": "#0e0e0e",
+              "surface": "#131313",
+              "on-surface-variant": "#c1c6d7",
+              "on-primary-fixed-variant": "#004493",
+              "surface-container": "#201f1f",
+              "inverse-surface": "#e5e2e1",
+              "on-error": "#690005",
+              "on-secondary": "#490080",
+              "inverse-primary": "#005bc1",
+              "tertiary-container": "#ef6719",
+              "primary": "#adc6ff",
+              "tertiary-fixed-dim": "#ffb595",
+              "primary-fixed": "#d8e2ff",
+              "inverse-on-surface": "#313030",
+              "surface-dim": "#131313",
+              "secondary-fixed-dim": "#ddb7ff",
+              "outline": "#8b90a0",
+              "on-tertiary": "#571e00",
+              "on-secondary-fixed-variant": "#6900b3",
+              "background": "#131313",
+              "on-secondary-fixed": "#2c0051",
+              "secondary-container": "#6f00be",
+              "primary-fixed-dim": "#adc6ff"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(53, 53, 52, 0.6);
+            backdrop-filter: blur(20px);
+        }
+        .kinetic-gradient {
+            background: linear-gradient(135deg, #ADC6FF 0%, #4B8EFF 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Auth Layout Wrapper -->
+<div class="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
+<!-- Background Ambient Elements -->
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary-container/10 blur-[120px] rounded-full"></div>
+<!-- Login Container -->
+<div class="w-full max-w-md z-10">
+<!-- Brand Anchor -->
+<div class="flex flex-col items-center mb-10">
+<div class="w-12 h-12 bg-surface-container-high rounded-lg flex items-center justify-center mb-4 border border-outline-variant/15">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="terminal">terminal</span>
+</div>
+<h1 class="font-headline text-2xl font-bold tracking-tighter text-on-surface">Stitch Code</h1>
+<p class="font-mono text-[10px] text-outline uppercase tracking-widest mt-1">Kinetic Development Environment</p>
+</div>
+<!-- Login Card -->
+<div class="glass-panel p-8 rounded-xl border border-outline-variant/15 shadow-2xl shadow-black/40">
+<div class="mb-8">
+<h2 class="text-xl font-semibold text-on-surface">Welcome back</h2>
+<p class="text-on-surface-variant text-sm mt-1">Enter your credentials to access your workspace.</p>
+</div>
+<form class="space-y-6">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block text-[11px] font-mono uppercase tracking-wider text-outline" for="email">Email Address</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-lg group-focus-within:text-primary transition-colors" data-icon="alternate_email">alternate_email</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 bg-surface-container border-none rounded-lg text-on-surface text-sm focus:ring-1 focus:ring-primary/50 placeholder:text-outline/50 transition-all" id="email" name="email" placeholder="name@company.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-[11px] font-mono uppercase tracking-wider text-outline" for="password">Password</label>
+<a class="text-[11px] font-semibold text-primary hover:text-primary-fixed-dim transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-lg group-focus-within:text-primary transition-colors" data-icon="lock">lock</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 bg-surface-container border-none rounded-lg text-on-surface text-sm focus:ring-1 focus:ring-primary/50 placeholder:text-outline/50 transition-all" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<!-- CTA Action -->
+<button class="kinetic-gradient w-full py-3 px-4 rounded-lg text-on-primary-container font-bold text-sm tracking-tight active:scale-[0.98] transition-all shadow-lg shadow-primary/20 hover:shadow-primary/40 flex items-center justify-center gap-2" type="submit">
+                        Login
+                        <span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<!-- Alternative Sign In -->
+<div class="mt-8 relative">
+<div aria-hidden="true" class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant/15"></div>
+</div>
+<div class="relative flex justify-center text-[10px] uppercase font-mono tracking-widest">
+<span class="px-3 bg-[#262625] text-outline">Or continue with</span>
+</div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center py-2.5 border border-outline-variant/15 rounded-lg hover:bg-surface-container-high transition-colors text-xs font-medium">
+<span class="material-symbols-outlined mr-2 text-base" data-icon="cloud">cloud</span>
+                        GitHub
+                    </button>
+<button class="flex items-center justify-center py-2.5 border border-outline-variant/15 rounded-lg hover:bg-surface-container-high transition-colors text-xs font-medium">
+<span class="material-symbols-outlined mr-2 text-base" data-icon="google">google</span>
+                        Google
+                    </button>
+</div>
+</div>
+<!-- Footer Link -->
+<p class="mt-8 text-center text-on-surface-variant text-sm">
+                Don't have an account? 
+                <a class="text-primary font-semibold hover:underline decoration-primary/30 underline-offset-4" href="#">Create Account</a>
+</p>
+</div>
+<!-- System Status Footer -->
+<div class="fixed bottom-6 w-full flex justify-center px-6">
+<div class="flex items-center gap-6 text-[10px] font-mono text-outline uppercase tracking-widest">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Systems Operational
+                </div>
+<div class="hidden md:block">v1.0.4 Release</div>
+<div class="hidden md:block">© 2024 Stitch Code</div>
+</div>
+</div>
+</div>
+<!-- Decorative Screen Elements (Asymmetric layout pieces) -->
+<div class="hidden lg:block absolute top-1/4 -right-20 w-64 h-64 border border-outline-variant/10 rounded-full pointer-events-none"></div>
+<div class="hidden lg:block absolute bottom-1/4 -left-20 w-96 h-96 border border-outline-variant/5 rounded-full pointer-events-none"></div>
+</body></html>
