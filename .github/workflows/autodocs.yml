@@ -1,0 +1,22 @@
+name: AutoDocs
+on:
+  push:
+    branches: [main]
+
+jobs:
+  autodocs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Get changed files
+        id: changed
+        run: |
+          FILES=$(git diff --name-only HEAD~1 HEAD | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+      - name: Trigger AutoDocs
+        run: |
+          curl -X POST "https://hiwfusexfhpbyzytieii.supabase.co/functions/v1/github-webhook?repo_id=37e6d5dc-1f6c-4df9-848c-75c400e77b87&secret=ba3ae3e5437e249b1870fe7c468db4e621ee8fd4cdeaa9d90e82d2d80e51556b" \
+            -H "Content-Type: application/json" \
+            -d '{"changed_files": '${{ steps.changed.outputs.files }}', "commit_sha": "${{ github.sha }}"}'
