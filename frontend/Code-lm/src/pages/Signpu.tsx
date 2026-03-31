@@ -37,7 +37,10 @@ export default function Signup() {
     return (
         <div className="min-h-screen bg-neutral-950 text-neutral-200 flex items-center justify-center px-4">
             <div className="w-full max-w-md rounded-xl border border-neutral-800 bg-neutral-900/40 p-6">
-                
+             <div className="flex items-centre  mb-3 ">
+             <img src="assets/hero.png" className="flex items-centre justify-centre mx-auto "></img>
+
+             </div>
                 <div className="text-center mb-6">
                     <h1 className="text-2xl font-semibold text-white">Build the future.</h1>
                     <p className="text-sm text-neutral-400 mt-1">
