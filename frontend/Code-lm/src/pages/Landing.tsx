@@ -1,3 +1,6 @@
+
+
+
 export default function Landing() {
     return (
       <div className="min-h-screen bg-neutral-950 text-neutral-200 overflow-hidden">
@@ -27,13 +30,14 @@ export default function Landing() {
             </p>
   
             <h1 className="text-5xl md:text-7xl font-semibold text-white leading-tight">
-              Code Smarter with <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">AI</span>
+              Code and Collaborate <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">In real Time</span>
             </h1>
-  
-            <p className="max-w-2xl mx-auto mt-6 text-neutral-400 text-lg">
-              The AI-powered code editor that thinks with you. High-performance,
+               <p className="max-w-4xl mx-auto mt-6 text-neutral-400 text-lg px-4 flex items-centre justify-centre ">
+              The AI-powered code editor rhat connects. High-performance,
               obsidian-grade development experience.
             </p>
+               
+            
   
             <div className="mt-10 flex items-center justify-center gap-4">
               <a
@@ -51,8 +55,13 @@ export default function Landing() {
             </div>
           </section>
   
+
+  <div className="flex items-centre gap-2 mt-2 mb-20 max-w-2xl mx-auto z-10">
+    <video src="video.mp4"  className="w-full" autoPlay  height={40} ></video>
+
+  </div>
           {/* Feature Cards */}
-          <section className="grid md:grid-cols-2 gap-6 mb-20">
+          <section className="grid md:grid-cols-2 gap-6 mb-20 mt-10">
             {[
               {
                 title: "AI Code Completion",
@@ -127,20 +136,20 @@ export default function Landing() {
               <h3 className="text-white text-3xl mb-4 font-semibold">
                 Ready to build the future?
               </h3>
-              <p className="text-neutral-400 mb-6">
-                Join developers building faster with Stitch Code.
+              <p className="text-neutral-400 mb-6 mt-8">
+                Join developers building faster with Code-lm
               </p>
   
               <div className="flex items-center justify-center gap-4">
                 <a
                   href="/signup"
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg hover:scale-105 transition"
+                  className="px-6 py-3 rounded-xl mt-4  bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg hover:scale-105 transition"
                 >
                   Get Started for Free
                 </a>
                 <a
                   href="/login"
-                  className="px-6 py-3 rounded-xl border border-neutral-700 hover:bg-neutral-800 transition"
+                  className="px-6 py-3 rounded-xl border mt-4 border-neutral-700 hover:bg-neutral-800 transition"
                 >
                   View Pricing
                 </a>
@@ -150,7 +159,7 @@ export default function Landing() {
         </main>
   
         <footer className="py-10 text-center text-xs text-neutral-500">
-          © 2026 Stitch Code
+          © 2026 Code-lm
         </footer>
       </div>
     );
