@@ -1,5 +1,3 @@
-Readme · MD
-Copy
 
 # Code-lm
  
