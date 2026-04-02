@@ -1,8 +1,9 @@
 import { prisma } from '../db/db.ts'
-import { z } from "zod"
+import {  z } from "zod"
 import type { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key"
 
@@ -107,3 +108,44 @@ export const login = async (req: Request, res: Response) => {
     });
 }
 
+export const getuser = async (req:Request, res:Response)=>{
+    const {email} = req.body;
+
+    const user = prisma.user.findUnique({
+        where:{
+            email
+            
+        }
+        
+    });
+    if(!user){
+        res.status(400).json({
+            message:"user not found"
+        })
+    }
+return res.status(201).json({
+    user,
+    message:"user found successfully"
+});
+
+
+
+}
+
+
+export const getalluser = async (req:Request, res:Response)=>{
+    
+    const user = prisma.user.findMany()
+    if(!user){
+        res.status(400).json({
+            message:"user not found"
+        })
+    }
+return res.status(201).json({
+    user,
+    message:"user found successfully"
+});
+
+
+
+}

@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
  import type { Request, Response } from "express";
 
 
+
  
 
 
@@ -33,14 +34,16 @@ export function authmiddleware(req:Request, res:Response){
     })
  }
 
+
  
- req.body.user = decoded.sub;
+ req.body.user= decoded.sub;
 
 console.log(decoded?.sub);
 
 
 return res.status(201).json({
     token
+    
 
 })
 
